@@ -9,11 +9,26 @@ export default function Minefield({ rows = 25, columns = 50, bombs = 5 }) {
 
   // const Field = 
   const [Field, setField] = useState(generateField({ rows, columns, bombs }))
+
+  const [won, setWon] = useState(false)
+  const [lost, setLost] = useState(false)
+  const [secondChance, setSecondChance] = useState(false)
   const squareClick = (x,y) => {
+    if (won || lost) return
     console.log('x,y',x,y)
     const cell = Field[x][y]
     console.log('Field:', cell)
-    if (cell.isBomb) alert("BOOOM")
+    if (cell.isBomb) {
+      if (secondChance) {
+        alert("BOOOM! You lost")
+        setLost(true)
+      } else {
+        alert("Careful! That's a bomb! You have one more chance")
+        setSecondChance(true)
+      }
+
+      return;
+    }
     Field[x][y].revealed = true
     let newField = Field
     if (Field[x][y].nearBombs === 0) {
@@ -32,7 +47,7 @@ export default function Minefield({ rows = 25, columns = 50, bombs = 5 }) {
     {Field.map((row, x) => {
 
       return <div className="row" key={x}>
-        {row.map((cell, y) => <Square key={`${x}${y}`} x={x} y={y} cell={cell} onClick={squareClick}/>)}
+        {row.map((cell, y) => <Square key={`${x}${y}`} x={x} y={y} cell={cell} lost={lost} onClick={squareClick}/>)}
         </div>
     })}
     {/* <Square/> */}
