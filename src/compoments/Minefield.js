@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { generateField, revealNear } from '../utils/MinefieldUtils'
+import { generateField, revealNear, checkIfGameWon } from '../utils/MinefieldUtils'
 
 import Square from './Square'
 export default function Minefield({ rows = 25, columns = 50, bombs = 5 }) {
@@ -13,6 +15,7 @@ export default function Minefield({ rows = 25, columns = 50, bombs = 5 }) {
   const [won, setWon] = useState(false)
   const [lost, setLost] = useState(false)
   const [secondChance, setSecondChance] = useState(false)
+
   const squareClick = (x,y) => {
     if (won || lost) return
     console.log('x,y',x,y)
@@ -20,10 +23,24 @@ export default function Minefield({ rows = 25, columns = 50, bombs = 5 }) {
     console.log('Field:', cell)
     if (cell.isBomb) {
       if (secondChance) {
-        alert("BOOOM! You lost")
+        toast.error('BOOOM! You lost', {
+          position: "top-center",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true
+        });
         setLost(true)
       } else {
-        alert("Careful! That's a bomb! You have one more chance")
+        toast.warn("Careful! That's a bomb! You have one more chance", {
+          position: "top-center",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true
+        });
         setSecondChance(true)
       }
 
@@ -31,18 +48,25 @@ export default function Minefield({ rows = 25, columns = 50, bombs = 5 }) {
     }
     Field[x][y].revealed = true
     let newField = Field
-    if (Field[x][y].nearBombs === 0) {
-      console.log('Trying to reveal near')
-      newField = revealNear(Field, x, y)
-    }
+    newField = revealNear(Field, x, y)
 
     setField([...newField])
-    // checkIfGameWon()
+    if (checkIfGameWon(newField, bombs)) {
+      setWon(true)
+      // toast('Congrats, you WON! Kudos')
+      toast.success('Congrats, you WON! Kudos', {
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true
+      });
+    }
     // if (Field)
 
   }
 
-  console.log('render?')
   return <div className="minefield">
     {Field.map((row, x) => {
 
@@ -50,6 +74,7 @@ export default function Minefield({ rows = 25, columns = 50, bombs = 5 }) {
         {row.map((cell, y) => <Square key={`${x}${y}`} x={x} y={y} cell={cell} lost={lost} onClick={squareClick}/>)}
         </div>
     })}
-    {/* <Square/> */}
+    {/* <ToastContainer position={toast.POSITION.TOP_RIGHT}/> */}
+    <ToastContainer/>
   </div>
 }
