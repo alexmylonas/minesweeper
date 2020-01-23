@@ -99,3 +99,14 @@ export function revealNear(f, x, y) {
   f = revealDirection(f,x,y, 1, -1)
   return f
 }
+
+export function checkIfGameWon(f, bombs) {
+  let unRevealead = 0;
+  f.forEach((row) => {
+    row.forEach(cell => {
+      if (!cell.revealed) unRevealead++
+    })
+  })
+
+  return unRevealead === bombs
+}
