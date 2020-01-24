@@ -51,7 +51,7 @@
 .square {
   height: 2rem;
   width: 2rem;
-  background-image: url('/square.png');
+  background-image: url('/square.png'), url('/minesweeper/square.png');
   background-repeat: no-repeat;
   background-size: contain;
   text-align: center;
@@ -68,7 +68,7 @@
 }
 
 .bomb {
-  background-image: url('/bomb.png');
+  background-image: url('/bomb.png'), url('/minesweeper/bomb.png');
   background-color: #b9b9b9;
 }
 
