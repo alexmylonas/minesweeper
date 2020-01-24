@@ -55,15 +55,39 @@
   background-image: url('/square.png');
   background-repeat: no-repeat;
   background-size: contain;
+  text-align: center;
+  display: table;
 }
 
 .revealed {
   background-image: none;
   background-color: #b9b9b9;
-  color: black
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bomb {
+  background-image: url('/bomb.png');
+  background-color: #b9b9b9;
 }
 
 .row {
   display: flex;
   flex-direction: row;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+}
+.inputs {
+  display: flex;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  padding: 18px;
+  display: flex;
 }
