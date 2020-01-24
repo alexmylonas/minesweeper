@@ -45,7 +45,6 @@
   padding-top: 36px;
   padding-bottom: 36px;
   flex-direction: column;
-  width: 50%;
   align-items: center;
 }
 
@@ -81,9 +80,12 @@
 .controls {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 .inputs {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btns {
   display: flex;

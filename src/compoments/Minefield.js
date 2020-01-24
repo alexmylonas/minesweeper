@@ -83,7 +83,7 @@ export default function Minefield() {
     setSecondChance(false)
     setRows(rows)
     setCols(columns)
-    setBombs(bombs)
+    setBombs(Number(bombs))
     setField(generateField({ rows, columns, bombs }))
   }
 
